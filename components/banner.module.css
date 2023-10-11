@@ -1,0 +1,97 @@
+.container {
+    margin-bottom: 6rem;
+}
+
+.title {
+    letter-spacing: -0.025em;
+    font-weight: 800;
+    color: var(--text-black);
+    line-height: 1;
+    margin: 10px 0;
+}
+
+.title1 {
+    color: #e9e7e6;
+}
+
+.title2 {
+    color: #140164;
+}
+
+.subTitle {
+    margin: 20px 0;
+    color: #e9e7e6;
+    font-weight: 500;
+}
+
+.button {
+    background-color: var(--text-purple);
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: var(--text-purple-dark);
+}
+
+@media (min-width: 640px) {
+    .title {
+        font-size: 48px;
+        line-height: 1;
+    }
+
+    .subTitle {
+        font-size: 20px;
+        margin-top: 1.25rem;
+        max-width: 36rem;
+    }
+
+    .buttonWrapper {
+        display: flex;
+        margin-top: 2rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .title {
+        font-size: 60px;
+        line-height: 1;
+    }
+
+    .subTitle {
+        font-size: 25px;
+        margin-top: 1.25rem;
+    }
+
+    .button {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        padding-left: 2.5rem;
+        padding-right: 2.5rem;
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .title {
+        font-size: 75px;
+        line-height: 1;
+    }
+
+    .subTitle {
+        font-size: 30px;
+        margin-top: 1.35rem;
+    }
+
+    .button {
+        padding: 20px 40px;
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+}
