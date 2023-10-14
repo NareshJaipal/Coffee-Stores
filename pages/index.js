@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import Banner from '../components/banner'
+import Image from 'next/image'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,6 +20,9 @@ export default function Home() {
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
         <Banner buttonText='View stores nearby' handleOnClick={handleOnBannerBtnClick} />
+        <div className={styles.heroImage}>
+          <Image src='/static/coffee.png' width={440} height={300} />
+        </div>
       </main>
     </>
   )
