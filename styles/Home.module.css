@@ -1,3 +1,5 @@
+/* Mobile First Development */
+
 .container {
   margin-bottom: 14rem;
 }
@@ -17,6 +19,25 @@
   z-index: 1;
 }
 
+.cardLayout {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  column-gap: 1.5rem;
+  row-gap: 1.5rem;
+}
+
+.card {
+  justify-content: center;
+}
+
+.heading2 {
+  font-size: 2.25rem;
+  line-height: 2.5;
+  padding-bottom: 2rem;
+  margin-top: 2rem;
+  color: var(--text-white-100);
+}
+
 @media (min-width: 640px) {
   .container {
     padding-left: 1rem;
@@ -27,6 +48,10 @@
     margin-top: 3rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+
+  .cardLayout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -42,6 +67,10 @@
 
   .heroImage {
     right: 5%;
+  }
+
+  .cardLayout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -60,10 +89,18 @@
   .heroImage {
     right: 5%;
   }
+
+  .cardLayout {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media(min-width: 1280px) {
   .main {
     margin-top: 7rem;
+  }
+
+  .cardLayout {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
