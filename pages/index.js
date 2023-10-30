@@ -1,12 +1,14 @@
 import Head from "next/head";
-import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
 import Image from "next/image";
+import { useEffect, useState, useContext } from "react";
+
+// import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.css";
 import Banner from "../components/banner";
 import Card from "../components/card";
 import { fetchPizzaStores } from "../lib/pizza-stores";
-
-// import coffeeStoresData from '../data/coffee-store.json'
+import useTrackLocation from "../hooks/use-track-location";
+import { ACTION_TYPES, StoreContext } from "./_app";
 
 export async function getStaticProps(context) {
   const pizzaStores = await fetchPizzaStores();
@@ -19,10 +21,39 @@ export async function getStaticProps(context) {
 }
 
 export default function Home(props) {
-  const handleOnBannerBtnClick = () => {
-    console.log("Button clicked");
-  };
+  const { handleTrackLocation, locationErrorMsg, isFindingLocation } =
+    useTrackLocation();
 
+  const { dispatch, state } = useContext(StoreContext);
+  const { pizzaStores, latLong } = state;
+
+  // const [pizzaStores, setPizzaStores] = useState("");
+  const [pizzaStoresError, setPizzaStoresError] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (latLong) {
+        try {
+          const fetchedPizzaStores = await fetchPizzaStores(latLong, 15);
+          console.log(fetchedPizzaStores);
+          // setPizzaStores(fetchedPizzaStores);
+          dispatch({
+            type: ACTION_TYPES.SET_PIZZA_STORES,
+            payload: { pizzaStores: fetchedPizzaStores },
+          });
+        } catch (error) {
+          console.log(error);
+          setPizzaStoresError(error.message);
+        }
+      }
+    };
+    fetchData();
+  }, [latLong]);
+
+  const handleOnBannerBtnClick = () => {
+    handleTrackLocation();
+    console.log({ latLong, locationErrorMsg });
+  };
   return (
     <div className={styles.container}>
       <Head>
@@ -33,9 +64,13 @@ export default function Home(props) {
 
       <main className={styles.main}>
         <Banner
-          buttonText="View stores nearby"
+          buttonText={
+            isFindingLocation ? "Locating . . ." : "View stores nearby"
+          }
           handleOnClick={handleOnBannerBtnClick}
         />
+        {locationErrorMsg && <p>Something went wrong: {locationErrorMsg}</p>}
+        {pizzaStoresError && <p>Something went wrong: {pizzaStoresError}</p>}
         <div className={styles.heroImage}>
           <Image
             src="/static/coffee.png"
@@ -45,9 +80,31 @@ export default function Home(props) {
             alt="Hero Image"
           />
         </div>
+        {pizzaStores.length > 0 && (
+          <div className={styles.sectionWrapper}>
+            <h2 className={styles.heading2}>Stores near me</h2>
+
+            <div className={styles.cardLayout}>
+              {pizzaStores.map((pizzaStores) => {
+                return (
+                  <Card
+                    className={styles.card}
+                    key={pizzaStores.id}
+                    name={pizzaStores.name}
+                    imgUrl={
+                      pizzaStores.imgUrl ||
+                      "https://images.unsplash.com/photo-1476283721796-dd935b062838?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                    }
+                    href={`/coffee-stores/${pizzaStores.id}`}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {props.coffeeStores.length > 0 && (
-          <>
+          <div className={styles.sectionWrapper}>
             <h2 className={styles.heading2}>Karachi Stores</h2>
 
             <div className={styles.cardLayout}>
@@ -55,18 +112,18 @@ export default function Home(props) {
                 return (
                   <Card
                     className={styles.card}
-                    key={coffeeStores.fsq_id}
+                    key={coffeeStores.id}
                     name={coffeeStores.name}
                     imgUrl={
                       coffeeStores.imgUrl ||
                       "https://images.unsplash.com/photo-1476283721796-dd935b062838?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
                     }
-                    href={`/coffee-stores/${coffeeStores.fsq_id}`}
+                    href={`/coffee-stores/${coffeeStores.id}`}
                   />
                 );
               })}
             </div>
-          </>
+          </div>
         )}
       </main>
     </div>

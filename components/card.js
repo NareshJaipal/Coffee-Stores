@@ -9,7 +9,7 @@ const Card = (props) => {
     <Link href={props.href}>
       <div className={cls("glass", styles.container)}>
         <div className={styles.headerWrapper}>
-          <h2 className={styles.header}>{props.name}</h2>
+          <h2 className={styles.header}>{props.name} →</h2>
         </div>
 
         <div className={styles.imageWrapper}>
