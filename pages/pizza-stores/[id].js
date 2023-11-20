@@ -12,8 +12,9 @@ import { StoreContext } from "../../store/store-context";
 import { fetcher, isEmpty } from "../../utils";
 
 export async function getStaticProps(staticProps) {
-  const pizzaStores = await fetchPizzaStores();
   const params = staticProps.params;
+
+  const pizzaStores = await fetchPizzaStores();
   const findPizzaStoreById = pizzaStores.find((pizzaStore) => {
     return pizzaStore.id.toString() === params.id;
   });
@@ -43,7 +44,7 @@ const pizzaStores = (initialProps) => {
   const router = useRouter();
 
   const id = router.query.id;
-  const [pizzaStore, setPizzaStore] = useState(initialProps.pizzaStore);
+  const [pizzaStore, setPizzaStore] = useState(initialProps.pizzaStore || {});
 
   const {
     state: { pizzaStores },
@@ -51,7 +52,7 @@ const pizzaStores = (initialProps) => {
 
   const handleCreatePizzaStore = async (pizzaStore) => {
     try {
-      const { id, name, imgUrl, address, locality } = pizzaStore;
+      const { id, name, voting, imgUrl, address, locality } = pizzaStore;
       const response = await fetch("/api/createPizzaStores/", {
         method: "POST",
         headers: {
@@ -89,7 +90,7 @@ const pizzaStores = (initialProps) => {
     }
   }, [id, initialProps, initialProps.pizzaStore]);
 
-  const { name, imgUrl, address, locality } = pizzaStore;
+  const { name = "", imgUrl = "", address = "", locality = "" } = pizzaStore;
 
   const [votingCount, setVotingCount] = useState(0);
 
