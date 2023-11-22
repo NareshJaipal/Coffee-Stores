@@ -6,7 +6,7 @@ import styles from "./card.module.css";
 
 const Card = (props) => {
   return (
-    <Link href={props.href}>
+    <Link href={props.href} className={styles.cardLink}>
       <div className={cls("glass", styles.container)}>
         <div className={styles.headerWrapper}>
           <h2 className={styles.header}>{props.name} →</h2>
