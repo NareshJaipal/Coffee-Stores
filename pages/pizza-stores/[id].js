@@ -6,7 +6,7 @@ import Image from "next/image";
 import cls from "classnames";
 import useSWR from "swr";
 
-import style from "../../styles/coffee-stores.module.css";
+import style from "../../styles/pizza-stores.module.css";
 import { fetchPizzaStores } from "../../lib/pizza-stores";
 import { StoreContext } from "../../store/store-context";
 import { fetcher, isEmpty } from "../../utils";
