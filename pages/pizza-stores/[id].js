@@ -139,6 +139,7 @@ const pizzaStores = (initialProps) => {
     <div className={style.layout}>
       <Head>
         <title>{name}</title>
+        <meta name="description" content={`${name} Pizza Store`} />
       </Head>
       <div className={style.container}>
         <div className={style.col1}>
