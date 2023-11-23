@@ -7,5 +7,5 @@ module.exports = {
       },
     ],
   },
-  target: "serverless",
+  output: 'standalone',
 };
